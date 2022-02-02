@@ -1,0 +1,18 @@
+#pragma once
+#include "GridBasedGraph.h"
+namespace AI
+{
+	class AStar
+	{
+		using nodeList = std::list<GridBasedGraph::Node*>;
+		using GetCost = std::function<float(const GridBasedGraph::Node*, const GridBasedGraph::Node*)>;
+		using GetHeuristic = std::function<float(const GridBasedGraph::Node*, const GridBasedGraph::Node*)>;
+	public:
+		bool Run(GridBasedGraph& graph, int startX, int startY, int endX, int endY, GetCost getCost, GetHeuristic getHeuristic);
+		const std::list<GridBasedGraph::Node*>& GetOpenList() const { return mOpenList; }
+	private:
+		std::list<GridBasedGraph::Node*> mOpenList;
+		std::list<GridBasedGraph::Node*> mClosedList;
+		void sortedAdd(GridBasedGraph::Node* node);
+	};
+}
